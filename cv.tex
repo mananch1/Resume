@@ -1,0 +1,228 @@
+%-----------------------------------------------------------------------------------------------------------------------------------------------%
+%	The MIT License (MIT)
+%
+%	Copyright (c) 2021 Jitin Nair
+%
+%	Permission is hereby granted, free of charge, to any person obtaining a copy
+%	of this software and associated documentation files (the "Software"), to deal
+%	in the Software without restriction, including without limitation the rights
+%	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+%	copies of the Software, and to permit persons to whom the Software is
+%	furnished to do so, subject to the following conditions:
+%	
+%	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+%	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+%	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+%	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+%	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+%	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+%	THE SOFTWARE.
+%	
+%
+%-----------------------------------------------------------------------------------------------------------------------------------------------%
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT DEFINITION
+%----------------------------------------------------------------------------------------
+
+% article class because we want to fully customize the page and not use a cv template
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{5pt}{4pt}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+
+%for social icons
+\usepackage{fontawesome5}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+
+% job listing environments
+\newenvironment{jobshort}[2]
+    {
+    \begin{tabularx}{\linewidth}{@{}l X r@{}}
+    \textbf{#1} & \hfill &  #2 \\[3.75pt]
+    \end{tabularx}
+    }
+    {
+    }
+
+\newenvironment{joblong}[2]
+    {
+    \begin{tabularx}{\linewidth}{@{}l X r@{}}
+    \textbf{#1} & \hfill &  #2 \\[3.75pt]
+    \end{tabularx}
+    \begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut, leftmargin=1.5em, itemsep=2pt,label=\textbullet]
+    }
+    {
+    \end{itemize}
+    \end{minipage}    
+    }
+
+
+%----------------------------------------------------------------------------------------
+%	Tame parskip inside document body
+%----------------------------------------------------------------------------------------
+\usepackage{etoolbox}
+\AtBeginDocument{\setlength{\parskip}{0pt}}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+% non-numbered pages
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+\begin{tabularx}{\linewidth}{@{} C @{}}
+\Huge{Manan Chahal} \\[5pt]
+\href{https://github.com/mananch1}{\raisebox{-0.05\height}\faGithub\ mananch1} \ $|$ \ 
+\href{https://linkedin.com/in/manan-chahal-6a55212a7/}{\raisebox{-0.05\height}\faLinkedin\ manan-chahal} \ $|$ \ 
+\href{mailto:mananchahal01@gmail.com}{\raisebox{-0.05\height}\faEnvelope \ mananchahal01@gmail.com} \ $|$ \ 
+\href{tel:+918850576810}{\raisebox{-0.05\height}\faMobile \ +91 88505 76810} \\
+\end{tabularx}
+
+%Interests/ Keywords/ Summary
+\section{Summary}
+Fourth-year Computer Engineering student with industry experience building AI-powered applications at the National Stock Exchange of India. Skilled in applied ML, computer vision, multilingual AI, backend services, and full-stack development.
+
+%Experience
+\section{Internships}
+\begin{joblong}{AI/ML Intern -- National Stock Exchange of India (NSE)}{May 2026 -- July 2026}
+\item Worked on an automated multilingual translation system using Sarvam AI with server-side rendering, DOM traversal, and translation batching.
+\item Explored Redis and Elasticsearch caching with sentence hashing and cache invalidation for translated content retrieval.
+\item Contributed to an internal ChatGPT-style assistant using Next.js, Redis, and RAG deployed on Linux.
+\item Implemented speaker diarization using PyAnnote and explored ONNX/SafeTensors conversion for model deployment.
+\end{joblong}
+
+%Projects
+\section{Projects}
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\textbf{AI-Powered Civic Issue Reporting Platform} & \hfill \scriptsize{\textit{Python, PyTorch, OpenCV, Node.js, Express.js, Leaflet.js}} \\[2pt]
+\end{tabularx}
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=2pt,label=\textbullet]
+\item Fine-tuned a ResNet-34 model to verify complaint images before submission, reducing false reports.
+\item Built an interactive geospatial interface using Leaflet.js with distance-based dynamic loading of complaints.
+\item Developed backend APIs with Node.js and Express.js, implementing rate limiting to mitigate spam.
+\end{itemize}
+\end{minipage}
+\vspace{2pt}
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\textbf{Cloud-Based E-Learning Platform} & \hfill \scriptsize{\textit{React, Express.js, PostgreSQL, Azure, Linux, Nginx}} \\[2pt]
+\end{tabularx}
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=2pt,label=\textbullet]
+\item Built a full-stack web application using React and Express.js with REST APIs and auth middleware.
+\item Deployed on Microsoft Azure Linux VMs with SSL termination via Nginx reverse proxy.
+\end{itemize}
+\end{minipage}
+\vspace{2pt}
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\textbf{MW Satellite Data Processing CSRE, IIT Bombay} & \hfill \scriptsize{\textit{Python, Random Forest, QGIS, PolSARpro}} \\[2pt]
+\end{tabularx}
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=2pt,label=\textbullet]
+\item Built a Random Forest classifier to identify glacier flow lines from microwave satellite imagery.
+\item Processed SAR datasets using QGIS and PolSARpro to generate interpretable geospatial outputs.
+\end{itemize}
+\end{minipage}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+\section{Education}
+\begin{tabularx}{\linewidth}{@{}l X@{}}	
+2023 -- 2027 & B.Tech in Computer Engineering at \textbf{Vidyalankar Institute of Technology},
+
+University of Mumbai \hfill CGPI: \textbf{9.87} \\
+2023 & Class XII (CBSE) -- Green Fingers Global School \hfill 85.8\% \\
+2021 & Class X (ICSE) -- Ryan International School \hfill 85.4\% \\
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	ACHIEVEMENTS
+%----------------------------------------------------------------------------------------
+\section{Achievements}
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[nosep,after=\strut, leftmargin=2em, itemsep=1pt,label=\textbullet]
+\item \textbf{AI/ML Intern} at NSE India
+\item \textbf{1st Place} CodeSprint (CSI-VIT) 
+\item \textbf{2nd Place} Bug Auction $|$ \textbf{3rd Place} Jeopardy (ITSA-VIT).
+\item Solved \textbf{350+} problems on LeetCode \& competitive programming platforms.
+\end{itemize}
+\end{minipage}
+
+%----------------------------------------------------------------------------------------
+%	SKILLS
+%----------------------------------------------------------------------------------------
+\section{Skills}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\textbf{Languages} &  Python, Java, JavaScript, C \\
+\textbf{AI / ML}  &  PyTorch, Scikit-learn, OpenCV, LLMs, RAG, Speaker Diarization, ONNX \\
+\textbf{Web / DB} &  React, Next.js, Node.js, Express.js, Redis, PostgreSQL, MongoDB, Elasticsearch \\
+\textbf{Cloud / DevOps} & Azure, Linux, Git, GitHub, Nginx, CI/CD \\
+\end{tabularx}
+
+\end{document}
