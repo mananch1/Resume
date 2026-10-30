@@ -1,0 +1,86 @@
+name: Build and Deploy Resume
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compile LaTeX CV
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: cv.tex
+          args: "-pdf -interaction=nonstopmode"
+
+      - name: Sync compiled PDF to Resume.pdf
+        run: |
+          if [ -f "cv.pdf" ]; then
+            cp -f cv.pdf Resume.pdf
+          fi
+
+      - name: Commit updated Resume.pdf back to repo
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add Resume.pdf
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: auto-compile updated Resume.pdf [skip ci]"
+            git push
+          else
+            echo "No changes to Resume.pdf."
+          fi
+
+      - name: Prepare site directory
+        run: |
+          mkdir -p dist
+          cp index.html dist/
+          cp Resume.pdf dist/
+          if [ -f "cv.pdf" ]; then
+            cp cv.pdf dist/
+          fi
+          touch dist/.nojekyll
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+        continue-on-error: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+        continue-on-error: true
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
