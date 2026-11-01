@@ -27,3 +27,8 @@ desktop.ini
 # Editor directories
 .vscode/
 .idea/
+
+# Local build artifacts
+bin/
+cv.pdf
+*.png
